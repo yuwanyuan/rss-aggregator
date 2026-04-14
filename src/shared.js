@@ -56,7 +56,7 @@ function pickTag(xml, names) {
   if (!xml) return null;
   const candidates = Array.isArray(names) ? names : [names];
   for (const name of candidates) {
-    const escaped = name.replace(':', ':');
+    const escaped = name;
     const match = xml.match(new RegExp(`<${escaped}[^>]*>([\\s\\S]*?)<\\/${escaped}>`, 'i'));
     if (match) return sanitizeText(match[1]);
 
