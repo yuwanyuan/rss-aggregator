@@ -5,6 +5,12 @@ export const DEFAULT_LIMIT = 100;
 export const MAX_FEEDS = 20;
 export const MAX_ITEMS = 500;
 
+/** 从环境变量获取默认 feeds（逗号分隔），CF Workers 用 env.DEFAULT_FEEDS，Vercel 用 process.env.DEFAULT_FEEDS */
+function getDefaultFeeds(envSource) {
+  const raw = envSource?.DEFAULT_FEEDS || (typeof process !== 'undefined' && process.env?.DEFAULT_FEEDS) || '';
+  return raw.split(',').map(v => v.trim()).filter(Boolean);
+}
+
 function toNumber(value, fallback) {
   const n = Number.parseInt(value, 10);
   return Number.isFinite(n) && n > 0 ? n : fallback;
@@ -172,7 +178,7 @@ function buildHelp(hostLike) {
   };
 }
 
-export async function handleRequest(rawUrl) {
+export async function handleRequest(rawUrl, envSource) {
   try {
     const url = new URL(rawUrl);
     const urlParams = url.searchParams;
@@ -186,11 +192,17 @@ export async function handleRequest(rawUrl) {
 
     const hostLike = `${url.origin}${url.pathname}`;
     if (!allUrls.length) {
-      return {
-        status: 200,
-        headers: { 'content-type': 'text/html; charset=utf-8' },
-        body: getHtml(),
-      };
+      // 尝试从环境变量加载默认 feeds
+      const defaultFeeds = getDefaultFeeds(envSource);
+      if (defaultFeeds.length) {
+        allUrls.push(...defaultFeeds);
+      } else {
+        return {
+          status: 200,
+          headers: { 'content-type': 'text/html; charset=utf-8' },
+          body: getHtml(),
+        };
+      }
     }
 
     if (allUrls.length > MAX_FEEDS) {
