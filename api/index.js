@@ -6,7 +6,7 @@ export default async function handler(request) {
     const proto = request.headers.get('x-forwarded-proto') || 'https';
     const rawUrl = `${proto}://${host}${request.url}`;
 
-    const payload = await handleRequest(rawUrl);
+    const payload = await handleRequest(rawUrl, process.env);
 
     return new Response(payload.body, {
       status: payload.status,
