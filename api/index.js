@@ -1,22 +1,23 @@
 import { handleRequest } from '../src/shared.js';
 
-export default async function handler(req, res) {
+export default async function handler(request) {
   try {
-    const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost';
-    const proto = req.headers['x-forwarded-proto'] || 'https';
-    const rawUrl = `${proto}://${host}${req.url}`;
+    const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || 'localhost';
+    const proto = request.headers.get('x-forwarded-proto') || 'https';
+    const rawUrl = `${proto}://${host}${request.url}`;
 
     const payload = await handleRequest(rawUrl);
 
-    res.statusCode = payload.status;
-    for (const [key, value] of Object.entries(payload.headers || {})) {
-      res.setHeader(key, value);
-    }
-    res.end(payload.body);
+    return new Response(payload.body, {
+      status: payload.status,
+      headers: payload.headers,
+    });
   } catch (error) {
-    res.statusCode = 500;
-    res.setHeader('content-type', 'application/json; charset=utf-8');
-    res.end(JSON.stringify({ error: error.message || 'internal error' }));
+    return new Response(JSON.stringify({ error: error.message || 'internal error' }), {
+      status: 500,
+      headers: { 'content-type': 'application/json; charset=utf-8' },
+    });
   }
 }
+
 
