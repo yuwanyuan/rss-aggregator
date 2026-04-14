@@ -1,3 +1,5 @@
+import { getHtml } from './ui.js';
+
 export const DEFAULT_DAYS = 3;
 export const DEFAULT_LIMIT = 100;
 export const MAX_FEEDS = 20;
@@ -186,8 +188,8 @@ export async function handleRequest(rawUrl) {
     if (!allUrls.length) {
       return {
         status: 200,
-        headers: { 'content-type': 'application/json; charset=utf-8' },
-        body: JSON.stringify(buildHelp(hostLike), null, 2),
+        headers: { 'content-type': 'text/html; charset=utf-8' },
+        body: getHtml(),
       };
     }
 
