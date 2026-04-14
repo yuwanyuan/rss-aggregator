@@ -1,3 +1,7 @@
 name = "rss-aggregator"
 main = "src/cf-worker.js"
 compatibility_date = "2026-01-01"
+
+# 预设默认 feeds（逗号分隔），无 urls 参数时自动使用
+# [vars]
+# DEFAULT_FEEDS = "https://hnrss.org/frontpage,https://feeds.feedburner.com/TechCrunch"
