@@ -1,0 +1,3 @@
+name = "rss-aggregator"
+main = "src/cf-worker.js"
+compatibility_date = "2026-01-01"
