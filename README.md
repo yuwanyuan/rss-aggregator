@@ -1,6 +1,13 @@
 # RSS 聚合工具（Cloudflare Workers / Vercel）
 
-## 功能简介
+## 一键部署
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/yuwanyuan/rss-aggregator)　[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yuwanyuan/rss-aggregator)
+
+> **Vercel**：点击按钮 → 登录 → 自动 Fork 并部署，根路径即 API 入口。  
+> **Cloudflare Workers**：点击按钮 → 登录 → 自动 Fork 并部署到 CF Workers。
+
+
 - 一次性聚合多条 RSS/Atom feed，多天内文章按时间更新时间倒序排序。
 - 可输出为 RSS 2.0 XML 或 JSON。
 - 支持参数：
