@@ -3,80 +3,80 @@ const HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RSS 聚合工具</title>
+<title>RSS 聚合工具 🔀</title>
 <style>
-:root{--bg:#0a0a0f;--card:#12121a;--border:#1e1e2e;--accent:#7c3aed;--accent2:#2563eb;--text:#e4e4e7;--muted:#71717a;--input-bg:#0f0f17}
+:root{--bg:#fef9f0;--card:#fff;--border:#2d2d2d;--accent:#ff6b6b;--accent2:#feca57;--accent3:#48dbfb;--text:#2d2d2d;--muted:#888;--input-bg:#fff;--radius:16px;--shadow:0 4px 0 rgba(0,0,0,.08)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+body{font-family:'Comic Neue','Nunito',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;background-image:radial-gradient(circle at 20% 80%,rgba(255,107,107,.06) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(72,219,251,.06) 0%,transparent 50%)}
 .container{max-width:780px;margin:0 auto;padding:32px 20px}
-.header{text-align:center;margin-bottom:36px}
-.header h1{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.02em}
-.header p{color:var(--muted);font-size:.9rem;margin-top:4px}
-.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;border:1px solid var(--border)}
-label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-textarea{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:.88rem;outline:none;transition:border .2s;resize:vertical;min-height:90px;font-family:'SF Mono',Menlo,monospace}
+.header{text-align:center;margin-bottom:32px}
+.header h1{font-size:2.2rem;font-weight:800;letter-spacing:-.01em}
+.header h1 .e1{color:var(--accent)}
+.header h1 .e2{color:var(--accent2)}
+.header h1 .e3{color:var(--accent3)}
+.header p{color:var(--muted);font-size:.92rem;margin-top:2px}
+.card{background:var(--card);border-radius:var(--radius);padding:24px 26px;margin-bottom:20px;border:3px solid var(--border);box-shadow:var(--shadow)}
+label{display:block;font-size:.82rem;color:var(--text);margin-bottom:6px;font-weight:700}
+textarea{width:100%;background:var(--input-bg);border:3px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-size:.88rem;outline:none;transition:border .2s;resize:vertical;min-height:90px;font-family:'SF Mono',Menlo,monospace}
 textarea:focus{border-color:var(--accent)}
-textarea::placeholder{color:#3f3f50}
+textarea::placeholder{color:#bbb}
 .row{display:flex;gap:12px;margin-top:14px}
 .row>div{flex:1}
-input[type=number],select{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:.88rem;outline:none;transition:border .2s}
-input:focus,select:focus{border-color:var(--accent)}
-select option{background:var(--card);color:var(--text)}
-.actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:10px;border:none;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .15s}
-.btn:active{transform:scale(.97)}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
-.btn-primary:hover{opacity:.92}
-.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
-.btn-ghost:hover{border-color:var(--muted);color:var(--text)}
-.btn-copy{background:#059669;color:#fff;display:none}
-.btn-copy:hover{background:#047857}
+input[type=number],select{width:100%;background:var(--input-bg);border:3px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);font-size:.88rem;outline:none;transition:border .2s;font-family:inherit}
+input:focus,select:focus{border-color:var(--accent3)}
+select option{background:#fff;color:var(--text)}
+.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 24px;border-radius:12px;border:3px solid var(--border);cursor:pointer;font-size:.9rem;font-weight:700;transition:all .1s;font-family:inherit;box-shadow:0 3px 0 rgba(0,0,0,.1)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:#fff;color:var(--text)}
+.btn-copy{background:#1dd1a1;color:#fff;display:none}
 .output{margin-top:20px;display:none}
-.output-box{background:var(--input-bg);border-radius:10px;padding:14px;font-family:'SF Mono',Menlo,monospace;font-size:.78rem;word-break:break-all;color:#a5b4fc;border:1px solid var(--border);line-height:1.5}
+.output-box{background:#fff8ee;border:3px solid var(--border);border-radius:12px;padding:14px;font-family:'SF Mono',Menlo,monospace;font-size:.78rem;word-break:break-all;color:#6c5ce7;line-height:1.5}
 #result-area{display:none;margin-top:20px}
-.result-card{background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:10px;border:1px solid var(--border);transition:border .2s}
-.result-card:hover{border-color:#2e2e42}
-.result-card h3{font-size:.95rem;margin-bottom:4px;font-weight:600}
-.result-card h3 a{color:#a5b4fc;text-decoration:none}
+.result-card{background:var(--card);border-radius:14px;padding:16px 18px;margin-bottom:12px;border:3px solid var(--border);box-shadow:0 3px 0 rgba(0,0,0,.06);transition:transform .1s}
+.result-card:hover{transform:translateY(-2px)}
+.result-card h3{font-size:.95rem;margin-bottom:4px;font-weight:700}
+.result-card h3 a{color:#6c5ce7;text-decoration:none}
 .result-card h3 a:hover{text-decoration:underline}
-.result-card .meta{font-size:.72rem;color:var(--muted);margin-bottom:6px}
-.result-card p{font-size:.84rem;color:#a1a1aa;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.65rem;padding:2px 8px;border-radius:6px;font-weight:600;margin-left:6px;vertical-align:middle}
-.loading{text-align:center;padding:24px;color:var(--muted);font-size:.88rem}
-.result-count{font-size:.78rem;color:var(--muted);margin-bottom:12px}
-footer{text-align:center;color:#333;margin-top:40px;font-size:.72rem}
-footer a{color:#52526a;text-decoration:none}
+.result-card .meta{font-size:.74rem;color:var(--muted);margin-bottom:6px}
+.result-card p{font-size:.84rem;color:#666;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.badge{display:inline-block;background:var(--accent2);color:#2d2d2d;font-size:.68rem;padding:2px 9px;border-radius:8px;font-weight:700;margin-left:6px;vertical-align:middle;border:2px solid var(--border)}
+.loading{text-align:center;padding:24px;color:var(--muted);font-size:.92rem}
+.result-count{font-size:.84rem;color:var(--muted);margin-bottom:12px;font-weight:700}
+footer{text-align:center;color:#bbb;margin-top:40px;font-size:.76rem}
+footer a{color:#aaa;text-decoration:none}
 footer a:hover{color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <h1>RSS 聚合工具</h1>
-    <p>多条 RSS / Atom 订阅源 → 一条聚合 feed</p>
+    <h1><span class="e1">RSS</span> <span class="e2">🔀</span> <span class="e3">聚合工具</span></h1>
+    <p>多条订阅源 → 一条聚合 feed，简单粗暴</p>
   </div>
 
   <div class="card">
-    <label>Feed 地址（每行一个）</label>
+    <label>📋 Feed 地址（每行一个）</label>
     <textarea id="feeds" placeholder="https://hnrss.org/frontpage&#10;https://feeds.feedburner.com/TechCrunch"></textarea>
 
     <div class="row">
-      <div><label>最近 N 天</label><input id="days" type="number" value="3" min="1" max="365"></div>
-      <div><label>条数上限</label><input id="limit" type="number" value="50" min="1" max="500"></div>
-      <div><label>输出格式</label>
+      <div><label>📅 最近 N 天</label><input id="days" type="number" value="3" min="1" max="365"></div>
+      <div><label>🔢 条数上限</label><input id="limit" type="number" value="50" min="1" max="500"></div>
+      <div><label>📦 输出格式</label>
         <select id="format"><option value="json">JSON</option><option value="rss">RSS XML</option></select>
       </div>
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" onclick="generate()">生成链接</button>
-      <button class="btn btn-ghost" onclick="preview()">预览结果</button>
-      <button class="btn btn-copy" id="copy-btn" onclick="copyUrl()">复制链接</button>
+      <button class="btn btn-primary" onclick="generate()">🔗 生成链接</button>
+      <button class="btn btn-ghost" onclick="preview()">👀 预览结果</button>
+      <button class="btn btn-copy" id="copy-btn" onclick="copyUrl()">📋 复制链接</button>
     </div>
   </div>
 
   <div class="output" id="output-box">
-    <label>聚合链接</label>
+    <label>🎯 聚合链接</label>
     <div class="output-box" id="output-url"></div>
   </div>
 
@@ -85,7 +85,7 @@ footer a:hover{color:var(--accent)}
     <div id="results"></div>
   </div>
 
-  <footer>聚合在服务端完成，无 CORS 问题 · <a href="https://github.com/yuwanyuan/rss-aggregator">GitHub</a></footer>
+  <footer>聚合在服务端完成 · 无 CORS 问题 · <a href="https://github.com/yuwanyuan/rss-aggregator">GitHub</a></footer>
 </div>
 
 <script>
@@ -108,14 +108,14 @@ function buildApiUrl(){
 }
 function generate(){
   const url=buildApiUrl()
-  if(!url){alert('请输入至少一个 Feed 地址');return}
+  if(!url){alert('请输入至少一个 Feed 地址 🥺');return}
   document.getElementById('output-box').style.display='block'
   document.getElementById('output-url').textContent=url
   document.getElementById('copy-btn').style.display='inline-flex'
 }
 async function preview(){
   const url=buildApiUrl()
-  if(!url){alert('请输入至少一个 Feed 地址');return}
+  if(!url){alert('请输入至少一个 Feed 地址 🥺');return}
   document.getElementById('output-box').style.display='block'
   document.getElementById('output-url').textContent=url
   document.getElementById('copy-btn').style.display='inline-flex'
@@ -123,15 +123,15 @@ async function preview(){
   const box=document.getElementById('results')
   const countEl=document.getElementById('result-count')
   area.style.display='block'
-  box.innerHTML='<div class="loading">加载中…</div>'
+  box.innerHTML='<div class="loading">⏳ 加载中…</div>'
   countEl.textContent=''
   try{
     const resp=await fetch(url)
     const contentType=resp.headers.get('content-type')||''
     if(contentType.includes('json')){
       const data=await resp.json()
-      if(!data.items||!data.items.length){box.innerHTML='<div class="loading">无匹配结果</div>';return}
-      countEl.textContent='共 '+data.items.length+' 条'
+      if(!data.items||!data.items.length){box.innerHTML='<div class="loading">😶 无匹配结果</div>';return}
+      countEl.textContent='🎉 共 '+data.items.length+' 条'
       box.innerHTML=data.items.map(it=>\`
         <div class="result-card">
           <h3><a href="\${it.link||'#'}" target="_blank" rel="noopener">\${esc(it.title)}</a>
@@ -140,14 +140,13 @@ async function preview(){
           <p>\${esc(it.description)}</p>
         </div>\`).join('')
     }else{
-      const text=await resp.text()
-      box.innerHTML='<div class="loading"><a href="'+url+'" target="_blank" style="color:#a5b4fc">RSS XML 已生成，点击查看</a></div>'
+      box.innerHTML='<div class="loading">📄 <a href="'+url+'" target="_blank" style="color:#6c5ce7">RSS XML 已生成，点击查看</a></div>'
     }
-  }catch(e){box.innerHTML='<div class="loading">请求失败: '+esc(e.message)+'</div>'}
+  }catch(e){box.innerHTML='<div class="loading">😱 请求失败: '+esc(e.message)+'</div>'}
 }
 function copyUrl(){
   const url=document.getElementById('output-url').textContent
-  navigator.clipboard.writeText(url).then(()=>{const b=document.getElementById('copy-btn');b.textContent='✓ 已复制';setTimeout(()=>{b.textContent='复制链接'},1500)})
+  navigator.clipboard.writeText(url).then(()=>{const b=document.getElementById('copy-btn');b.textContent='✅ 已复制';setTimeout(()=>{b.textContent='📋 复制链接'},1500)})
 }
 function esc(s){if(!s)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 </script>
