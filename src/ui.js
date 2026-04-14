@@ -89,6 +89,33 @@ footer a:hover{color:var(--accent)}
 </div>
 
 <script>
+const STORAGE_KEY='rss_agg_config';
+function loadConfig(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY)
+    if(!raw) return
+    const cfg=JSON.parse(raw)
+    if(cfg.feeds) document.getElementById('feeds').value=cfg.feeds
+    if(cfg.days) document.getElementById('days').value=cfg.days
+    if(cfg.limit) document.getElementById('limit').value=cfg.limit
+    if(cfg.format) document.getElementById('format').value=cfg.format
+  }catch(e){}
+}
+function saveConfig(){
+  const cfg={
+    feeds:document.getElementById('feeds').value,
+    days:document.getElementById('days').value,
+    limit:document.getElementById('limit').value,
+    format:document.getElementById('format').value
+  }
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cfg))}catch(e){}
+}
+loadConfig()
+document.getElementById('feeds').addEventListener('input',saveConfig)
+document.getElementById('days').addEventListener('input',saveConfig)
+document.getElementById('limit').addEventListener('input',saveConfig)
+document.getElementById('format').addEventListener('change',saveConfig)
+
 function getFeeds(){
   return document.getElementById('feeds').value.split('\\n').map(s=>s.trim()).filter(Boolean)
 }
