@@ -10,6 +10,8 @@
 ## 功能
 
 - 🖥 **Web UI**：访问根路径即可使用可视化界面，填写 Feed 地址、参数，一键生成聚合链接或预览结果
+- 💾 **配置持久化**：UI 中的 Feed 地址和参数自动保存到浏览器 localStorage，下次打开自动恢复
+- ⚙️ **环境变量预设**：通过 `DEFAULT_FEEDS` 环境变量配置默认订阅源，无参数时自动聚合
 - 一次性聚合多条 RSS/Atom feed，多天内文章按时间更新时间倒序排序
 - 可输出为 RSS 2.0 XML 或 JSON
 - 支持参数：
@@ -118,3 +120,24 @@ git push
   - `days`: 1~365
   - `limit`: 1~500
 - 依赖 RSS 可用性：聚合结果受源站限流和可访问性影响。
+
+## 环境变量
+
+| 变量 | 说明 | 示例 |
+|------|------|------|
+| `DEFAULT_FEEDS` | 预设默认 feeds（逗号分隔），无 `urls` 参数时自动聚合 | `https://hnrss.org/frontpage,https://feeds.feedburner.com/TechCrunch` |
+
+### Cloudflare Workers 配置
+
+在 `wrangler.toml` 中添加：
+
+```toml
+[vars]
+DEFAULT_FEEDS = "https://hnrss.org/frontpage,https://feeds.feedburner.com/TechCrunch"
+```
+
+或在 CF Dashboard → Workers → Settings → Variables 中配置。
+
+### Vercel 配置
+
+在 Vercel Dashboard → Settings → Environment Variables 中添加 `DEFAULT_FEEDS`。
