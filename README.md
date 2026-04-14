@@ -37,13 +37,20 @@
 #### 必需文件
 - `api/index.js`
 - `src/shared.js`
+- `vercel.json`
 
 #### 部署步骤
-1. 项目根目录推送到 Vercel。
-2. 框架设置选择 **Other**。
-3. 确保 `api/index.js` 作为 Serverless Function 使用。
+1. 在根目录执行 `vercel` 完成初始化。
+2. 选择项目后，`framework` 选择 **Other**。
+3. 确认 `api/index.js` 会被识别为 Function（或在 `vercel.json` 中显式指定）。
+4. 生产环境部署：
+   ```bash
+   npm install -g vercel
+   npm run deploy:vercel
+   ```
 
 ## 使用示例
+
 ```bash
 # 聚合两个 feed，输出 RSS（注意：feed 地址中的查询参数要先 encode）
 https://你的域名/api?url=https://feeds.feedburner.com/TechCrunch%3Fformat%3Drss&url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml&days=3&limit=20
