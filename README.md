@@ -7,9 +7,11 @@
 > **Vercel**：点击按钮 → 登录 → 自动 Fork 并部署，根路径即 API 入口。  
 > **Cloudflare Workers**：点击按钮 → 登录 → 自动 Fork 并部署到 CF Workers。
 
+## 功能
 
-- 一次性聚合多条 RSS/Atom feed，多天内文章按时间更新时间倒序排序。
-- 可输出为 RSS 2.0 XML 或 JSON。
+- 🖥 **Web UI**：访问根路径即可使用可视化界面，填写 Feed 地址、参数，一键生成聚合链接或预览结果
+- 一次性聚合多条 RSS/Atom feed，多天内文章按时间更新时间倒序排序
+- 可输出为 RSS 2.0 XML 或 JSON
 - 支持参数：
   - `urls`: 多条 feed 地址，英文逗号分隔（示例：`https://.../feed`）
   - `url`: 可重复参数（示例：`&url=https://a.com&url=https://b.com`）
